@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 当前仓库
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 安装 Python
         uses: actions/setup-python@v4
