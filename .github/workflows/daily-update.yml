@@ -1,0 +1,35 @@
+name: 每日自动生成广东IPTV m3u
+# 定时规则 UTC时间，北京时间=UTC+8
+# 北京时间凌晨2点 → UTC 18点
+on:
+  schedule:
+    - cron: '0 18 * * *'
+  workflow_dispatch: # 支持手动点击运行测试
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 拉取仓库代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      # 2. 配置Python
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      # 3. 安装依赖
+      - name: Install requirements
+        run: pip install requests
+      # 4. 执行process_m3u.py
+      - name: Run process_m3u.py
+        run: python process_m3u.py
+      # 5. 自动提交更新后的m3u文件回仓库
+      - name: Commit & Push changes
+        run: |
+          git config --global user.name "IPTV Bot"
+          git config --global user.email "bot@github.com"
+          git add GuangdongIPTV_http.m3u
+          git commit -m "Auto update m3u $(date +%Y-%m-%d)" || echo "无更新无需提交"
+          git push
