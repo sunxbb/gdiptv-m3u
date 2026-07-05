@@ -5,7 +5,7 @@ from collections import defaultdict
 # ========== 配置区 ==========
 urls_raw = [
     "https://raw.githubusercontent.com/Tzwcard/ChinaTelecom-GuangdongIPTV-RTP-List/refs/heads/master/GuangdongIPTV_rtp_all.m3u",
-    "https://raw.githubusercontent.com/Tzwcard/ChinaTelecom-GuangdongIPTV-RTP-List/refs/heads/master/GuangdongIPTV_rtp_4k.m3u"
+    "https://raw.githubusercontent.com/Tzwcard/ChinaTelecom-GuangdongIPTV-RTP-List/master/GuangdongIPTV_rtp_4k.m3u"
 ]
 urls_fast = [
     "https://mirror.ghproxy.com/https://raw.githubusercontent.com/Tzwcard/ChinaTelecom-GuangdongIPTV-RTP-List/master/GuangdongIPTV_rtp_all.m3u",
@@ -20,31 +20,35 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"
 }
 
-# 画质权重：数值越大画质越高，用于排序
+# 画质权重（越高画质越优先）
 quality_weight = {
     "4K": 6,
+    "4k超高清": 6,
     "超高清": 5,
     "超清": 4,
     "HD": 3,
     "高清": 2,
     "标清": 1
 }
-# 匹配画质后缀正则
-quality_reg = re.compile(r"(4K|超高清|超清|HD|高清|标清)")
-# 归类用正则，剥离画质后缀得到基础频道名
-strip_suffix_reg = re.compile(r"(4K|超高清|超清|HD|高清|标清)$")
+# 匹配画质关键词（支持中间带空格场景）
+quality_reg = re.compile(r"(4k超高清|4K|超高清|超清|HD|高清|标清)", re.IGNORECASE)
+# 剥离画质后缀用于频道分组
+strip_suffix_reg = re.compile(r"\s*(4k超高清|4K|超高清|超清|HD|高清|标清)$", re.IGNORECASE)
 
 def get_std_channel_name(name: str) -> str:
-    """去除画质后缀，生成统一分组key"""
+    """去除末尾画质后缀，得到基础频道名用于分组"""
     return strip_suffix_reg.sub("", name).strip()
 
 def get_quality_score(name: str) -> int:
-    """获取当前频道画质权重，无标签返回0（普通频道放最后）"""
+    """提取画质分数，无画质标识返回0"""
     match = quality_reg.search(name)
-    if match:
-        tag = match.group(1)
-        return quality_weight.get(tag, 0)
-    return 0
+    if not match:
+        return 0
+    tag = match.group(1)
+    tag_lower = tag.lower()
+    if tag_lower == "4k超高清":
+        return quality_weight["4k超高清"]
+    return quality_weight.get(tag, 0)
 
 def download_text(url_list) -> list:
     content_list = []
@@ -60,7 +64,7 @@ def download_text(url_list) -> list:
             print(f"❌ 链接失败 {url} | 错误: {str(err)[:120]}")
     return content_list
 
-# 下载源文件
+# 下载源
 print("尝试直连Github Raw...")
 all_text = download_text(urls_raw)
 if len(all_text) < 2:
@@ -68,8 +72,8 @@ if len(all_text) < 2:
     fast_text = download_text(urls_fast)
     all_text.extend(fast_text)
 
-# 分组存储 key=标准化频道名 value=[(画质分数, extinf行, 显示名, 播放地址)]
-channel_groups = defaultdict(list)
+# 结构：key=标准频道名，value=字典{播放地址: (画质分, extinf行, 显示名)}
+channel_groups = defaultdict(dict)
 
 for text in all_text:
     lines = text.splitlines()
@@ -88,30 +92,35 @@ for text in all_text:
             display_name = name_match.group(1).strip()
             std_name = get_std_channel_name(display_name)
             score = get_quality_score(display_name)
-            # 存入分组，带上排序权重
-            channel_groups[std_name].append((-score, extinf_cache, display_name, play_url))
+            # 用播放地址做key自动去重，重复地址会覆盖只保留第一条
+            channel_groups[std_name][play_url] = (score, extinf_cache, display_name)
 
-# 生成M3U内容
+# 组装输出
 result = ["#EXTM3U"]
-total_line_count = 0
-group_total = len(channel_groups)
+total_unique = 0
+group_count = len(channel_groups)
 
-for group_title, item_list in channel_groups.items():
-    # 按 -score 升序等价于 score 降序：4K > 超高清 > 超清 > HD > 高清 > 标清
+for group_name, url_map in channel_groups.items():
+    # 转为列表：(负分数, extinf, 显示名, 播放地址)，方便画质降序
+    item_list = []
+    for play_url, (score, extinf, disp_name) in url_map.items():
+        item_list.append((-score, extinf, disp_name, play_url))
+    # 按画质从高到低排序
     item_list.sort()
-    for score_neg, extinf, disp_name, url in item_list:
+    # 写入m3u
+    for neg_score, extinf, disp, url in item_list:
         result.append(extinf)
         result.append(url)
-        total_line_count += 1
+        total_unique += 1
 
-final_m3u = "\n".join(result)
+# 保存文件
+final_content = "\n".join(result)
 try:
     with open(output_file, "w", encoding="utf-8") as f:
-        f.write(final_m3u)
-    print(f"\n===== 完成 =====")
-    print(f"频道分组总数：{group_total}")
-    print(f"全部播放线路：{total_line_count} 条")
+        f.write(final_content)
+    print(f"\n===== 处理完成 =====")
+    print(f"频道分组总数：{group_count}")
+    print(f"去重后独立线路总数：{total_unique}")
     print(f"输出文件：{output_file}")
 except Exception as e:
     print(f"文件保存失败: {str(e)}")
-    
