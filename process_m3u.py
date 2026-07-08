@@ -20,35 +20,52 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"
 }
 
-# 画质权重（越高画质越优先）
+# 画质权重（统一小写key，大小写不敏感匹配）
 quality_weight = {
-    "4K": 6,
     "4k超高清": 6,
+    "4k": 6,
     "超高清": 5,
     "超清": 4,
-    "HD": 3,
+    "hd": 3,
     "高清": 2,
     "标清": 1
 }
-# 匹配画质关键词（支持中间带空格场景）
-quality_reg = re.compile(r"(4k超高清|4K|超高清|超清|HD|高清|标清)", re.IGNORECASE)
-# 剥离画质后缀用于频道分组
-strip_suffix_reg = re.compile(r"\s*(4k超高清|4K|超高清|超清|HD|高清|标清)$", re.IGNORECASE)
+# 匹配画质、带宽标识，忽略大小写
+quality_reg = re.compile(r"(4k超高清|4K超高清|4K|超高清|超清|HD|高清|标清|\d+M)", re.IGNORECASE)
 
-def get_std_channel_name(name: str) -> str:
-    """去除末尾画质后缀，得到基础频道名用于分组"""
-    return strip_suffix_reg.sub("", name).strip()
+def get_quality_info(raw_name: str):
+    """
+    处理原始名称：去首尾空格，计算主画质分 + 次级排序分
+    返回 (主分数, 次级分数, 提取的标签列表)
+    次级分：4K超高清=2，纯4K=1，其余0，同画质4K超高清置顶
+    """
+    # 需求2：先去除前后空格
+    raw_clean = raw_name.strip()
+    matches = quality_reg.findall(raw_clean)
+    max_score = 0
+    sub_score = 0
+    tag_list = []
 
-def get_quality_score(name: str) -> int:
-    """提取画质分数，无画质标识返回0"""
-    match = quality_reg.search(name)
-    if not match:
-        return 0
-    tag = match.group(1)
-    tag_lower = tag.lower()
-    if tag_lower == "4k超高清":
-        return quality_weight["4k超高清"]
-    return quality_weight.get(tag, 0)
+    for tag in matches:
+        tag_strip = tag.strip()
+        tag_lower = tag_strip.lower()
+        tag_list.append(tag_strip)
+
+        if tag_lower in quality_weight:
+            max_score = max(max_score, quality_weight[tag_lower])
+            # 次级排序权重
+            if tag_lower == "4k超高清":
+                sub_score = 2
+            elif tag_lower == "4k":
+                sub_score = max(sub_score, 1)
+    return max_score, sub_score, tag_list
+
+def get_line_note(tag_list: list) -> str:
+    """生成线路备注，去重拼接；无标签返回普通线路"""
+    unique_tags = list(dict.fromkeys(tag_list))
+    if not unique_tags:
+        return "普通线路"
+    return " ".join(unique_tags)
 
 def download_text(url_list) -> list:
     content_list = []
@@ -64,16 +81,17 @@ def download_text(url_list) -> list:
             print(f"❌ 链接失败 {url} | 错误: {str(err)[:120]}")
     return content_list
 
-# 下载源
+# 下载源文件
 print("尝试直连Github Raw...")
 all_text = download_text(urls_raw)
 if len(all_text) < 2:
-    print("\n直连失败，切换国内ghproxy加速镜像...")
+    print("\n直连失败，切换ghproxy镜像下载...")
     fast_text = download_text(urls_fast)
     all_text.extend(fast_text)
 
-# 结构：key=标准频道名，value=字典{播放地址: (画质分, extinf行, 显示名)}
-channel_groups = defaultdict(dict)
+# 存储结构 key = 去空格后的 tvg-name
+# 元组：(-主分, -次级分, 原始EXTINF, 代理URL, 线路备注)
+channel_groups = defaultdict(list)
 
 for text in all_text:
     lines = text.splitlines()
@@ -85,42 +103,53 @@ for text in all_text:
         if line.startswith("#EXTINF:"):
             extinf_cache = line
         elif line.startswith("rtp://"):
-            play_url = line.replace("rtp://", replace_prefix)
+            if not extinf_cache:
+                continue
+            # 提取 tvg-name 并去空格
+            tvg_match = re.search(r'tvg-name="([^"]+)"', extinf_cache)
+            if not tvg_match:
+                continue
+            tvg_name = tvg_match.group(1).strip()
+
+            # 提取逗号后原始显示名，去首尾空格
             name_match = re.search(r",(.+)$", extinf_cache)
             if not name_match:
-                continue
-            display_name = name_match.group(1).strip()
-            std_name = get_std_channel_name(display_name)
-            score = get_quality_score(display_name)
-            # 用播放地址做key自动去重，重复地址会覆盖只保留第一条
-            channel_groups[std_name][play_url] = (score, extinf_cache, display_name)
+                raw_display = tvg_name
+            else:
+                raw_display = name_match.group(1).strip()
 
-# 组装输出
+            # 获取画质分数、次级排序、标签
+            score, sub_score, tags = get_quality_info(raw_display)
+            line_note = get_line_note(tags)
+            proxy_url = line.replace("rtp://", replace_prefix)
+
+            # 存入分组，负号实现降序
+            channel_groups[tvg_name].append((-score, -sub_score, extinf_cache, proxy_url, line_note))
+
+# 组装输出M3U
 result = ["#EXTM3U"]
-total_unique = 0
-group_count = len(channel_groups)
+total_lines = 0
+total_channels = len(channel_groups)
 
-for group_name, url_map in channel_groups.items():
-    # 转为列表：(负分数, extinf, 显示名, 播放地址)，方便画质降序
-    item_list = []
-    for play_url, (score, extinf, disp_name) in url_map.items():
-        item_list.append((-score, extinf, disp_name, play_url))
-    # 按画质从高到低排序
-    item_list.sort()
-    # 写入m3u
-    for neg_score, extinf, disp, url in item_list:
-        result.append(extinf.replace("IPTV-", ""))
-        result.append(url)
-        total_unique += 1
+for tvg_name, line_list in channel_groups.items():
+    # 先按主画质排序，同画质按次级分（4K超高清优先）
+    line_list.sort()
+    for neg_score, neg_sub, extinf, url, note in line_list:
+        # 统一逗号后显示名为干净无空格tvg-name，APP自动合并线路
+        new_extinf = re.sub(r",.*$", f",{tvg_name}", extinf)
+        final_url = f"{url}${note}"
+        result.append(new_extinf)
+        result.append(final_url)
+        total_lines += 1
 
-# 保存文件
-final_content = "\n".join(result)
+# 写入文件
+output_content = "\n".join(result)
 try:
     with open(output_file, "w", encoding="utf-8") as f:
-        f.write(final_content)
+        f.write(output_content)
     print(f"\n===== 处理完成 =====")
-    print(f"频道分组总数：{group_count}")
-    print(f"去重后独立线路总数：{total_unique}")
+    print(f"独立频道总数：{total_channels}")
+    print(f"总线路数量：{total_lines}")
     print(f"输出文件：{output_file}")
 except Exception as e:
-    print(f"文件保存失败: {str(e)}")
+    print(f"文件写入失败：{str(e)}")
