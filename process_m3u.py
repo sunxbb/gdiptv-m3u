@@ -104,12 +104,12 @@ for group_name, url_map in channel_groups.items():
     # 转为列表：(负分数, extinf, 显示名, 播放地址)，方便画质降序
     item_list = []
     for play_url, (score, extinf, disp_name) in url_map.items():
-        item_list.append((-score, extinf, disp_name.replace("IPTV-", ""), play_url))
+        item_list.append((-score, extinf, disp_name, play_url))
     # 按画质从高到低排序
     item_list.sort()
     # 写入m3u
     for neg_score, extinf, disp, url in item_list:
-        result.append(extinf)
+        result.append(extinf.replace("IPTV-", ""))
         result.append(url)
         total_unique += 1
 
