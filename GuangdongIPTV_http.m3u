@@ -1,10 +1,10 @@
 #EXTM3U
 #EXTINF:-1 tvg-name="广东卫视" group-title="广东电视台",广东卫视
-http://192.168.0.251:4022/udp/239.77.0.66:5146$广东卫视4k超高清
-#EXTINF:-1 tvg-name="广东卫视" group-title="广东电视台",广东卫视
 http://192.168.0.251:4022/udp/239.77.0.65:5146$广东卫视4k超高清25p
 #EXTINF:-1 tvg-name="广东卫视" group-title="广东电视台",广东卫视
 http://192.168.0.251:4022/udp/239.77.1.16:5146$广东卫视 4K (AVS2)
+#EXTINF:-1 tvg-name="广东卫视" group-title="广东电视台",广东卫视
+http://192.168.0.251:4022/udp/239.77.1.96:5146$广东卫视 4K (AVS2)
 #EXTINF:-1 tvg-name="广东卫视" group-title="广东电视台",广东卫视
 http://192.168.0.251:4022/udp/239.77.0.166:5146$广东卫视超清
 #EXTINF:-1 tvg-name="广东卫视" group-title="广东电视台",广东卫视
@@ -52,6 +52,10 @@ http://192.168.0.251:4022/udp/239.253.43.72:5146$广州新闻高清
 #EXTINF:-1 tvg-name="深圳卫视时移专用(深圳卫视)" group-title="深圳电视台",深圳卫视时移专用(深圳卫视)
 http://192.168.0.251:4022/udp/239.77.0.92:5146$深圳卫视时移专用(深圳卫视)
 #EXTINF:-1 tvg-name="深圳卫视" group-title="深圳电视台",深圳卫视
+http://192.168.0.251:4022/udp/239.77.1.191:5146$深圳卫视 4K
+#EXTINF:-1 tvg-name="深圳卫视" group-title="深圳电视台",深圳卫视
+http://192.168.0.251:4022/udp/239.77.1.194:5146$深圳卫视 4K (AVS2)
+#EXTINF:-1 tvg-name="深圳卫视" group-title="深圳电视台",深圳卫视
 http://192.168.0.251:4022/udp/239.77.1.24:5146$深圳卫视 4K (AVS2)
 #EXTINF:-1 tvg-name="深圳卫视" group-title="深圳电视台",深圳卫视
 http://192.168.0.251:4022/udp/239.77.0.130:5146$深圳卫视超清
@@ -67,12 +71,10 @@ http://192.168.0.251:4022/udp/239.77.1.189:5146$深圳卫视高清
 http://192.168.0.251:4022/udp/239.77.1.3:5146$深圳卫视高清
 #EXTINF:-1 tvg-name="深圳都市频道" group-title="深圳电视台",深圳都市频道
 http://192.168.0.251:4022/udp/239.77.1.124:5146$深圳都市频道高清
-#EXTINF:-1 tvg-name="深圳都市频道" group-title="深圳电视台",深圳都市频道
-http://192.168.0.251:4022/udp/239.77.1.176:5146$深圳都市频道高清
 #EXTINF:-1 tvg-name="深圳电视剧频道" group-title="深圳电视台",深圳电视剧频道
 http://192.168.0.251:4022/udp/239.77.1.125:5146$深圳电视剧频道高清
-#EXTINF:-1 tvg-name="深圳少儿频道" group-title="深圳电视台",深圳少儿频道
-http://192.168.0.251:4022/udp/239.77.1.244:5146$深圳少儿频道高清
+#EXTINF:-1 tvg-name="深圳电视剧频道" group-title="深圳电视台",深圳电视剧频道
+http://192.168.0.251:4022/udp/239.77.1.177:5146$深圳电视剧频道高清
 #EXTINF:-1 tvg-name="深圳龙岗频道" group-title="深圳电视台",深圳龙岗频道
 http://192.168.0.251:4022/udp/239.77.1.223:5146$深圳龙岗频道高清
 #EXTINF:-1 tvg-name="深圳宜和购物" group-title="深圳电视台",深圳宜和购物
@@ -157,10 +159,6 @@ http://192.168.0.251:4022/udp/239.77.0.175:5146$CCTV-3超清 (CAVS)
 http://192.168.0.251:4022/udp/239.77.0.169:5146$CCTV-3高清
 #EXTINF:-1 tvg-name="CCTV-4" group-title="央视",CCTV-4
 http://192.168.0.251:4022/udp/239.77.0.78:5146$CCTV-4高清
-#EXTINF:-1 tvg-name="CCTV-4" group-title="央视",CCTV-4
-http://192.168.0.251:4022/udp/239.77.1.163:5146$CCTV-4高清
-#EXTINF:-1 tvg-name="CCTV-4" group-title="央视",CCTV-4
-http://192.168.0.251:4022/udp/239.77.1.166:5146$CCTV-4高清
 #EXTINF:-1 tvg-name="CCTV4中文国际美洲" group-title="央视",CCTV4中文国际美洲
 http://192.168.0.251:4022/udp/239.253.43.121:5146$CCTV4中文国际美洲高清
 #EXTINF:-1 tvg-name="CCTV4中文国际欧洲" group-title="央视",CCTV4中文国际欧洲
@@ -188,8 +186,6 @@ http://192.168.0.251:4022/udp/239.77.0.181:5146$CCTV-8超清 (CAVS)
 #EXTINF:-1 tvg-name="CCTV-8" group-title="央视",CCTV-8
 http://192.168.0.251:4022/udp/239.77.0.172:5146$CCTV-8高清
 #EXTINF:-1 tvg-name="CCTV-9" group-title="央视",CCTV-9
-http://192.168.0.251:4022/udp/239.77.1.160:5146$CCTV-9高清
-#EXTINF:-1 tvg-name="CCTV-9" group-title="央视",CCTV-9
 http://192.168.0.251:4022/udp/239.77.1.168:5146$CCTV-9高清 (CAVS)
 #EXTINF:-1 tvg-name="CCTV-9" group-title="央视",CCTV-9
 http://192.168.0.251:4022/udp/239.77.0.135:5146$CCTV-9高清测试
@@ -208,13 +204,13 @@ http://192.168.0.251:4022/udp/239.77.1.109:5146$CCTV-12高清
 #EXTINF:-1 tvg-name="CCTV-12" group-title="央视",CCTV-12
 http://192.168.0.251:4022/udp/239.77.1.170:5146$CCTV-12高清 (CAVS)
 #EXTINF:-1 tvg-name="CCTV-12" group-title="央视",CCTV-12
-http://192.168.0.251:4022/udp/239.77.1.190:5146$CCTV-12高清 (CAVS)
-#EXTINF:-1 tvg-name="CCTV-12" group-title="央视",CCTV-12
 http://192.168.0.251:4022/udp/239.77.0.136:5146$CCTV-12高清测试
 #EXTINF:-1 tvg-name="CCTV-13" group-title="央视",CCTV-13
 http://192.168.0.251:4022/udp/239.253.43.196:5146$CCTV-13高清
 #EXTINF:-1 tvg-name="CCTV-13" group-title="央视",CCTV-13
 http://192.168.0.251:4022/udp/239.77.0.188:5146$CCTV-13高清
+#EXTINF:-1 tvg-name="CCTV-14" group-title="央视",CCTV-14
+http://192.168.0.251:4022/udp/239.77.1.161:5146$CCTV-14高清
 #EXTINF:-1 tvg-name="CCTV-14" group-title="央视",CCTV-14
 http://192.168.0.251:4022/udp/239.77.1.171:5146$CCTV-14高清
 #EXTINF:-1 tvg-name="CCTV-14" group-title="央视",CCTV-14
@@ -225,8 +221,6 @@ http://192.168.0.251:4022/udp/239.77.1.120:5146$CCTV-15高清
 http://192.168.0.251:4022/udp/239.77.1.239:5146$CCTV-15高清
 #EXTINF:-1 tvg-name="CCTV-16" group-title="央视",CCTV-16
 http://192.168.0.251:4022/udp/239.77.0.18:5146$CCTV-16 4K
-#EXTINF:-1 tvg-name="CCTV-16" group-title="央视",CCTV-16
-http://192.168.0.251:4022/udp/239.77.0.218:5146$CCTV-16 4K
 #EXTINF:-1 tvg-name="CCTV-16" group-title="央视",CCTV-16
 http://192.168.0.251:4022/udp/239.77.0.165:5146$CCTV-16高清
 #EXTINF:-1 tvg-name="CCTV-17" group-title="央视",CCTV-17
@@ -247,6 +241,8 @@ http://192.168.0.251:4022/udp/239.253.43.200:5146$CGTN阿拉伯语高清
 http://192.168.0.251:4022/udp/239.253.43.201:5146$CGTN俄语高清
 #EXTINF:-1 tvg-name="湖南卫视" group-title="卫视",湖南卫视
 http://192.168.0.251:4022/udp/239.77.0.56:5146$湖南卫视4k超高清
+#EXTINF:-1 tvg-name="湖南卫视" group-title="卫视",湖南卫视
+http://192.168.0.251:4022/udp/239.77.1.30:5146$湖南卫视 4K (AVS2)
 #EXTINF:-1 tvg-name="湖南卫视" group-title="卫视",湖南卫视
 http://192.168.0.251:4022/udp/239.77.0.127:5146$湖南卫视超清 (CAVS)
 #EXTINF:-1 tvg-name="湖南卫视" group-title="卫视",湖南卫视
@@ -288,6 +284,8 @@ http://192.168.0.251:4022/udp/239.77.0.90:5146$江苏卫视时移专用(江苏�
 #EXTINF:-1 tvg-name="东方卫视" group-title="卫视",东方卫视
 http://192.168.0.251:4022/udp/239.77.0.59:5146$东方卫视4k超高清
 #EXTINF:-1 tvg-name="东方卫视" group-title="卫视",东方卫视
+http://192.168.0.251:4022/udp/239.77.1.34:5146$东方卫视 4K (AVS2)
+#EXTINF:-1 tvg-name="东方卫视" group-title="卫视",东方卫视
 http://192.168.0.251:4022/udp/239.77.0.5:5146$东方卫视高清
 #EXTINF:-1 tvg-name="东方卫视" group-title="卫视",东方卫视
 http://192.168.0.251:4022/udp/239.77.1.218:5146$东方卫视高清
@@ -306,15 +304,17 @@ http://192.168.0.251:4022/udp/239.77.0.3:5146$北京卫视4K超高清
 #EXTINF:-1 tvg-name="北京卫视" group-title="卫视",北京卫视
 http://192.168.0.251:4022/udp/239.77.0.233:5146$北京卫视 4K
 #EXTINF:-1 tvg-name="北京卫视" group-title="卫视",北京卫视
-http://192.168.0.251:4022/udp/239.77.0.232:5146$北京卫视高清
+http://192.168.0.251:4022/udp/239.77.1.13:5146$北京卫视 4K
 #EXTINF:-1 tvg-name="北京卫视" group-title="卫视",北京卫视
-http://192.168.0.251:4022/udp/239.77.1.151:5146$北京卫视高清
+http://192.168.0.251:4022/udp/239.77.0.232:5146$北京卫视高清
 #EXTINF:-1 tvg-name="北京卫视" group-title="卫视",北京卫视
 http://192.168.0.251:4022/udp/239.77.1.4:5146$北京卫视高清
 #EXTINF:-1 tvg-name="北京卫视" group-title="卫视",北京卫视
 http://192.168.0.251:4022/udp/239.77.0.91:5146$北京卫视时移专用(北京卫视)
 #EXTINF:-1 tvg-name="天津卫视" group-title="卫视",天津卫视
 http://192.168.0.251:4022/udp/239.77.0.131:5146$天津卫视超清 (CAVS)
+#EXTINF:-1 tvg-name="天津卫视" group-title="卫视",天津卫视
+http://192.168.0.251:4022/udp/239.77.1.141:5146$天津卫视高清
 #EXTINF:-1 tvg-name="天津卫视" group-title="卫视",天津卫视
 http://192.168.0.251:4022/udp/239.77.1.182:5146$天津卫视高清 (CAVS)
 #EXTINF:-1 tvg-name="天津卫视" group-title="卫视",天津卫视
@@ -327,6 +327,8 @@ http://192.168.0.251:4022/udp/239.77.0.132:5146$山东卫视超清 (CAVS)
 http://192.168.0.251:4022/udp/239.77.0.8:5146$山东卫视高清
 #EXTINF:-1 tvg-name="山东卫视" group-title="卫视",山东卫视
 http://192.168.0.251:4022/udp/239.77.1.142:5146$山东卫视高清
+#EXTINF:-1 tvg-name="山东卫视" group-title="卫视",山东卫视
+http://192.168.0.251:4022/udp/239.77.1.153:5146$山东卫视高清 (CAVS)
 #EXTINF:-1 tvg-name="山东卫视" group-title="卫视",山东卫视
 http://192.168.0.251:4022/udp/239.77.0.94:5146$山东卫视时移专用(山东卫视)
 #EXTINF:-1 tvg-name="江西卫视" group-title="卫视",江西卫视
@@ -356,6 +358,8 @@ http://192.168.0.251:4022/udp/239.77.1.6:5146$黑龙江卫视高清
 #EXTINF:-1 tvg-name="黑龙江卫视" group-title="卫视",黑龙江卫视
 http://192.168.0.251:4022/udp/239.77.0.93:5146$黑龙江卫视
 #EXTINF:-1 tvg-name="贵州卫视" group-title="卫视",贵州卫视
+http://192.168.0.251:4022/udp/239.77.1.221:5146$贵州卫视高清
+#EXTINF:-1 tvg-name="贵州卫视" group-title="卫视",贵州卫视
 http://192.168.0.251:4022/udp/239.77.0.230:5146$贵州卫视
 #EXTINF:-1 tvg-name="四川卫视" group-title="卫视",四川卫视
 http://192.168.0.251:4022/udp/239.77.0.60:5146$四川卫视4k超高清
@@ -381,6 +385,8 @@ http://192.168.0.251:4022/udp/239.253.43.100:5146$云南卫视
 http://192.168.0.251:4022/udp/239.77.1.162:5146$重庆卫视高清
 #EXTINF:-1 tvg-name="重庆卫视" group-title="卫视",重庆卫视
 http://192.168.0.251:4022/udp/239.77.0.182:5146$重庆卫视
+#EXTINF:-1 tvg-name="河北卫视" group-title="卫视",河北卫视
+http://192.168.0.251:4022/udp/239.77.1.214:5146$河北卫视高清
 #EXTINF:-1 tvg-name="河北卫视" group-title="卫视",河北卫视
 http://192.168.0.251:4022/udp/239.77.0.148:5146$河北卫视
 #EXTINF:-1 tvg-name="东南卫视" group-title="卫视",东南卫视
@@ -417,8 +423,6 @@ http://192.168.0.251:4022/udp/239.77.1.26:5146$西藏卫视高清
 http://192.168.0.251:4022/udp/239.77.0.46:5146$西藏卫视
 #EXTINF:-1 tvg-name="新疆卫视" group-title="卫视",新疆卫视
 http://192.168.0.251:4022/udp/239.253.43.202:5146$新疆卫视高清
-#EXTINF:-1 tvg-name="新疆卫视" group-title="卫视",新疆卫视
-http://192.168.0.251:4022/udp/239.77.1.25:5146$新疆卫视高清
 #EXTINF:-1 tvg-name="新疆卫视" group-title="卫视",新疆卫视
 http://192.168.0.251:4022/udp/239.77.0.47:5146$新疆卫视
 #EXTINF:-1 tvg-name="甘肃卫视" group-title="卫视",甘肃卫视
@@ -491,6 +495,10 @@ http://192.168.0.251:4022/udp/239.253.43.114:5146$CETV4
 http://192.168.0.251:4022/udp/239.253.43.40:5146$CETV-4高清
 #EXTINF:-1 tvg-name="早期教育" group-title="数字付费",早期教育
 http://192.168.0.251:4022/udp/239.77.0.180:5146$早期教育高清
+#EXTINF:-1 tvg-name="早期教育" group-title="数字付费",早期教育
+http://192.168.0.251:4022/udp/239.77.1.114:5146$早期教育高清
+#EXTINF:-1 tvg-name="早期教育" group-title="数字付费",早期教育
+http://192.168.0.251:4022/udp/239.77.1.122:5146$早期教育高清
 #EXTINF:-1 tvg-name="中国天气" group-title="数字付费",中国天气
 http://192.168.0.251:4022/udp/239.77.1.2:5146$中国天气高清
 #EXTINF:-1 tvg-name="快乐垂钓" group-title="数字付费",快乐垂钓
@@ -515,18 +523,18 @@ http://192.168.0.251:4022/udp/239.77.1.21:5146$睛彩篮球高清
 http://192.168.0.251:4022/udp/239.77.1.22:5146$睛彩青少高清
 #EXTINF:-1 tvg-name="IPTV1" group-title="IPTV频道",IPTV1
 http://192.168.0.251:4022/udp/239.77.1.7:5146$IPTV1高清
-#EXTINF:-1 tvg-name="IPTV2" group-title="IPTV频道",IPTV2
-http://192.168.0.251:4022/udp/239.77.1.8:5146$IPTV2高清
 #EXTINF:-1 tvg-name="IPTV爱综艺" group-title="IPTV频道",IPTV爱综艺
 http://192.168.0.251:4022/udp/239.77.0.107:5146$爱综艺
+#EXTINF:-1 tvg-name="IPTV3" group-title="IPTV频道",IPTV3
+http://192.168.0.251:4022/udp/239.77.1.9:5146$IPTV3高清
 #EXTINF:-1 tvg-name="IPTV4" group-title="IPTV频道",IPTV4
 http://192.168.0.251:4022/udp/239.77.1.10:5146$IPTV4高清
 #EXTINF:-1 tvg-name="IPTV爱体育" group-title="IPTV频道",IPTV爱体育
 http://192.168.0.251:4022/udp/239.77.0.176:5146$爱体育高清
 #EXTINF:-1 tvg-name="IPTV爱体育" group-title="IPTV频道",IPTV爱体育
-http://192.168.0.251:4022/udp/239.77.1.116:5146$爱体育高清
-#EXTINF:-1 tvg-name="IPTV爱体育" group-title="IPTV频道",IPTV爱体育
 http://192.168.0.251:4022/udp/239.77.0.108:5146$爱体育
+#EXTINF:-1 tvg-name="IPTV爱电影" group-title="IPTV频道",IPTV爱电影
+http://192.168.0.251:4022/udp/239.77.1.138:5146$爱电影高清
 #EXTINF:-1 tvg-name="IPTV爱电影" group-title="IPTV频道",IPTV爱电影
 http://192.168.0.251:4022/udp/239.77.0.103:5146$爱电影
 #EXTINF:-1 tvg-name="IPTV爱大剧" group-title="IPTV频道",IPTV爱大剧
@@ -539,10 +547,6 @@ http://192.168.0.251:4022/udp/239.77.0.100:5146$IPTV相声小品
 http://192.168.0.251:4022/udp/239.77.0.101:5146$IPTV野外
 #EXTINF:-1 tvg-name="IPTV法治" group-title="IPTV频道",IPTV法治
 http://192.168.0.251:4022/udp/239.77.0.102:5146$IPTV法治
-#EXTINF:-1 tvg-name="IPTV法治" group-title="IPTV频道",IPTV法治
-http://192.168.0.251:4022/udp/239.77.1.86:5146$IPTV法治
-#EXTINF:-1 tvg-name="IPTV魅力时尚" group-title="IPTV频道",IPTV魅力时尚
-http://192.168.0.251:4022/udp/239.77.1.88:5146$IPTV魅力时尚
 #EXTINF:-1 tvg-name="IPTV魅力时尚" group-title="IPTV频道",IPTV魅力时尚
 http://192.168.0.251:4022/udp/239.77.0.110:5146$魅力时尚
 #EXTINF:-1 tvg-name="IPTV经典电影" group-title="IPTV频道",IPTV经典电影
